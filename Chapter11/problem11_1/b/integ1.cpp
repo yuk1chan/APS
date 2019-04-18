@@ -43,7 +43,7 @@ void initial(double *a, double *b, double *sum, double *dx,
   (*sum) = f(*a);
 
   // 台形近似
-  // (*sum) = (f(a) - f(b))/2.0;
+  // (*sum) = (f(a) + f(b))/2.0;
 }
 
 /*
