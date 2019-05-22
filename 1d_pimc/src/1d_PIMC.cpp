@@ -49,13 +49,11 @@ int main(int argc, char const *argv[]) {
   omp_set_num_threads(num_of_threads);
   // std::cout << num_of_threads << std::endl;
 
-  int N = 10;
-
   PIMCClass p1(params);
   PIMCClass p2(params);
   std::vector<PIMCClass *> pimc;
 
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < params.N; i++) {
     PIMCClass *p = new PIMCClass(params);
     pimc.push_back(p);
   }
@@ -63,7 +61,7 @@ int main(int argc, char const *argv[]) {
   int nshow = 10000;
 
 #pragma omp parallel for
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < params.N; i++) {
 
     for (int imcs = 1; imcs <= params.relaxation_steps; imcs++) {
       for (int Ni = 0; Ni < params.Np; Ni++) {
@@ -79,7 +77,7 @@ int main(int argc, char const *argv[]) {
   }
 
 #pragma omp parallel for
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < params.N; i++) {
     for (int imcs = 1; imcs <= params.MC_steps; imcs++) {
 
       Particle p;
@@ -101,7 +99,7 @@ int main(int argc, char const *argv[]) {
   std::cout << "---- output ---" << std::endl;
 
   std::vector<double> Ev;
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < params.N; i++) {
     double E;
     std::cout << "i : " << i << std::endl;
     E = pimc[i]->calcE(params.MC_steps);
@@ -109,11 +107,11 @@ int main(int argc, char const *argv[]) {
     pimc[i]->outputE(E);
   }
 
-  std::cout << "---- output ---" << std::endl;
+  std::cout << "---- result ---" << std::endl;
   outputE(Ev);
 
   std::string dir = "./data/";
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < params.N; i++) {
     std::string filename = dir + "data" + std::to_string(i) + ".txt";
     std::ofstream output(filename);
     pimc[i]->outputP(output, params.MC_steps);
