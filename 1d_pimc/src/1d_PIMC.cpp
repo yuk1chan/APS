@@ -11,6 +11,22 @@
 #include <random>
 #include <vector>
 
+void outputE(std::vector<double> &Ev) {
+
+  double Esum = 0.0;
+  double Esum2 = 0.0;
+
+  for (std::vector<double>::size_type i = 0; i < Ev.size(); i++) {
+    Esum += Ev[i];
+    Esum2 += pow(Ev[i], 2);
+  }
+
+  std::cout << "エネルギー :" << Esum / Ev.size() << std::endl;
+  std::cout << "エネルギーの分散 :"
+            << Esum2 / Ev.size() - pow(Esum / Ev.size(), 2) << std::endl;
+  std::cout << std::endl;
+}
+
 int main(int argc, char const *argv[]) {
 
   if (argc != 2) {
@@ -83,16 +99,18 @@ int main(int argc, char const *argv[]) {
   }
 
   std::cout << "---- output ---" << std::endl;
-  double Esum = 0.0;
+
+  std::vector<double> Ev;
   for (int i = 0; i < N; i++) {
     double E;
     std::cout << "i : " << i << std::endl;
     E = pimc[i]->calcE(params.MC_steps);
-    Esum += E;
+    Ev.push_back(E);
     pimc[i]->outputE(E);
   }
 
-  std::cout << "エネルギー :" << Esum / N << std::endl;
+  std::cout << "---- output ---" << std::endl;
+  outputE(Ev);
 
   std::string dir = "./data/";
   for (int i = 0; i < N; i++) {

@@ -4,12 +4,13 @@ void make_plot_file(void){
 
   FILE *fp = fopen("plot.plt","w");
 
+  //  fprintf(fp,"set terminal xterm\n");
   fprintf(fp,"set grid\n");
   fprintf(fp,"set xrange[:10]\n");
   fprintf(fp,"set yrange[0:0.5]\n");
 
   fprintf(fp,"psi(x) = exp(-x)*x*x/sqrt(pi)\n"); //  こっちが規格化されている???
-  // fprintf(fp,"f(x) = exp(-x)*x*x\n");
+  //  fprintf(fp,"psi(x) = x*x*exp(-x)\n");
   fprintf(fp,"plot psi(x) title \"psi\"\n");
   fprintf(fp,"replot \"psi.data\"\n");
 

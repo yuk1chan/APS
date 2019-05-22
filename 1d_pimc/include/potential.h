@@ -3,6 +3,8 @@
 
 // #include "./particle.h"
 
+#include <cmath>
+
 #define H 0.00001
 
 double V(double const &x);

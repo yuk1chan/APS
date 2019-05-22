@@ -10,7 +10,7 @@ private:
   Particle *path_;
 
 public:
-  // Path();
+  Path();
   Path(int N); // define the path
   ~Path();
 

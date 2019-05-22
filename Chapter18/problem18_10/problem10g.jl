@@ -2,7 +2,7 @@
 # gr()
 
 function ψ(r,a)
-    return exp(-a*r)/r
+    return exp(-a*r)
 end
 
 function ψ2(r,a)
@@ -10,11 +10,11 @@ function ψ2(r,a)
 end
 
 function dψ(r,a)
-    return -ψ(r,a)*(a+1/r)
+    return -a*ψ(r,a)
 end
 
 function d2ψ(r,a)
-    return -(a+1/r)*dψ(r,a) + ψ(r,a)/r^2
+    return a^2 *ψ(r,a)
 end
 
 # 湯川ポテンシャル
@@ -23,7 +23,7 @@ function V(r,α)
 end
 
 function Hψr2(r,a,α)
-    return -(2r*dψ(r,a) + (r^2)*d2ψ(r,a))/2 + V(r,α)*ψ(r,a)*r^2
+    return a*r*ψ(r,a) -a^2 *r^2 *ψ(r,a)/2 + V(r,α)*ψ(r,a)*r^2
 end
 
 # [-δ,δ]の一様乱数
@@ -79,46 +79,30 @@ function Metoropolis_MonteCalro(N,a,α)
     # @show N
     E = sumE/N
     V = sumE2/N - E^2
-    if -0.0102 <= E <= -0.0101 && V > 0
-        println("a = $a")
-        println("E = $E")
-        println("V = $V")
-        println()
-    end
+
+    println("a = $a")
+    println("E = $E")
+    println("V = $V")
+    println()
 
     return V, E
 end
 
 
 function main()
-    N = 1000000
+    N = 100000
 
     V = 1.0
     E = 0.0
 
     println("start")
     α = 1.0
-    for a in 0.13:0.000001:0.15
+    for a in 1:0.1:10
         tempV, tempE = Metoropolis_MonteCalro(N,-a,α)
-
-        # 収束してそうなものから
-        if -0.0102 <= tempE <= -0.0101 && tempV > 0
-
-            # 分散が最小のものを選ぶ
-            if tempV < V
-                E = tempE
-                V = tempV
-            end
-
-        end
-    end
     # Metoropolis_MoteCalro(N,-0.14221,α)
+    end
 
     println("finish")
 end
 
 main()
-
-# 試行関数の形がわからない
-# 確率分布に収束しているかの確認
-# a = -0.142 ~ -0.143 の間くらい？？？

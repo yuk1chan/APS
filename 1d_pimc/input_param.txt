@@ -1,7 +1,7 @@
-Np 10
-Delta_t 1.5
+Np 100
+Delta_t 0.1
 delta 1.0
 Delta_p 0.01
-relaxation_steps 5000000
-MC_steps 100000
+relaxation_steps 50000
+MC_steps 50000
 N 10

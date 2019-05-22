@@ -76,21 +76,29 @@ void initializetion(std::vector<Particle> &walker, double &Delta_t,
   cout << endl;
 
   // N*Delta_t >> 1 となるように選ぶ
-  cout << "分割時間 Delta_t = ";
-  cin >> Delta_t;
-  cout << endl;
+  // cout << "分割時間 Delta_t = ";
+  // cin >> Delta_t;
+  // cout << endl;
 
-  cout << "平衡状態に使用するMCステップ数 relaxation_step = ";
-  cin >> relaxation_step;
-  cout << endl;
+  Delta_t = 15.0 / N;
 
-  cout << "MCステップ数　mcs = ";
-  cin >> mcs;
-  cout << endl;
+  // cout << "平衡状態に使用するMCステップ数 relaxation_step = ";
+  // cin >> relaxation_step;
+  // cout << endl;
 
-  cout << "原子変位の試行変化の最大値 delta = ";
-  cin >> delta;
-  cout << endl;
+  relaxation_step = N * 5000;
+  //
+  // cout << "MCステップ数　mcs = ";
+  // cin >> mcs;
+  // cout << endl;
+
+  mcs = 10000;
+
+  // cout << "原子変位の試行変化の最大値 delta = ";
+  // cin >> delta;
+  // cout << endl;
+
+  delta = 0.5;
 
   for (int i = 0; i < N; i++) { // 全ての粒子の位置を初期化
     // 初期位置は基底状態の波動関数と似た形の分布になるようにする方が望ましい

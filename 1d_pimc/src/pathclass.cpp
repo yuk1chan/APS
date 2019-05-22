@@ -1,6 +1,8 @@
 #include "../include/particle.h"
 #include "../include/pathclass.h"
 
+Path::Path() {}
+
 Path::Path(int Np) {
   Np_ = Np;
 

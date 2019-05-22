@@ -15,6 +15,7 @@ end
 
 function Hψr2(r,a)
     return (-1/2)*(-2ψ(r,a)/a + (r^2)ψ(r,a)/a^2) + V(r)ψ(r,a)*r^2
+    # return (-2ψ(r,a)/a + (r^2)ψ(r,a)/a^2) + V(r)ψ(r,a)*r^2
 end
 
 # [-δ,δ]の一様乱数
@@ -80,8 +81,6 @@ end
 
 function main()
     N = 500000
-
-    println("hello")
 
     for a in 0.1:0.1:2
         Metoropolis_MonteCalro(N,a)
