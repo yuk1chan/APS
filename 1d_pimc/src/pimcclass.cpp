@@ -12,7 +12,6 @@ PIMCClass::PIMCClass(PIMCParams param)
     : randu(0.0, 1.0), rand_delta(-param.delta, param.delta) {
   param_ = param;
   path_ = new Path(param_.Np); // define path
-  // PIMCdelta = param_.PIMCdelta;
 
   P = new double[P_SIZE];
 
@@ -40,7 +39,7 @@ Particle PIMCClass::update_path() {
 
   int j;
   Particle p_trial, p;
-  Particle pr, pl;
+  // Particle pr, pl;
 
   // 1つの原子jを選択
   j = randgen_() % (param_.Np - 1);
@@ -50,15 +49,17 @@ Particle PIMCClass::update_path() {
   p_trial.x += rand_delta(randgen_);
 
   double tmpE1, tmpE2;
-  pr = path_->get_right_neightbour(j);
-  pl = path_->get_left_neightbour(j);
+  // pr = path_->get_right_neightbour(j);
+  // pl = path_->get_left_neightbour(j);
 
-  tmpE1 = 0.5 * pow(pr.x - p_trial.x, 2) / pow(param_.Delta_t, 2);
-  tmpE1 += 0.5 * pow(p_trial.x - pl.x, 2) / pow(param_.Delta_t, 2);
+  path_->set_particle(j, p_trial);
+  tmpE1 = 0.5 * pow(path_->get_left_distance(j), 2) / pow(param_.Delta_t, 2);
+  tmpE1 += 0.5 * pow(path_->get_right_distance(j), 2) / pow(param_.Delta_t, 2);
   tmpE1 += V(p_trial.x);
 
-  tmpE2 = 0.5 * pow(pr.x - p.x, 2) / pow(param_.Delta_t, 2);
-  tmpE2 += 0.5 * pow(p.x - pl.x, 2) / pow(param_.Delta_t, 2);
+  path_->set_particle(j, p);
+  tmpE2 = 0.5 * pow(path_->get_left_distance(j), 2) / pow(param_.Delta_t, 2);
+  tmpE2 += 0.5 * pow(path_->get_right_distance(j), 2) / pow(param_.Delta_t, 2);
   tmpE2 += V(p.x);
 
   double Delta_E = tmpE1 - tmpE2;
@@ -116,8 +117,8 @@ void PIMCClass::outputP(std::ofstream &outfile, int const &mcs) {
   for (int i = 0; i < P_SIZE / 2; i++) {
 
     if (i == 0) {
-      outfile << i * param_.Delta_p << "\t" << P[i] / (param_.Np * mcs)
-              << std::endl;
+      outfile << i * param_.Delta_p << "\t"
+              << P[i] / (param_.Np * mcs) / param_.Delta_p << std::endl;
     } else {
 
       pi = i + P_SIZE / 2;
@@ -127,10 +128,10 @@ void PIMCClass::outputP(std::ofstream &outfile, int const &mcs) {
       // Delta_p)
       // << endl;
 
-      outfile << i * param_.Delta_p << "\t" << P[pi] / (param_.Np * mcs)
-              << std::endl;
-      outfile << -i * param_.Delta_p << "\t" << P[mi] / (param_.Np * mcs)
-              << std::endl;
+      outfile << i * param_.Delta_p << "\t"
+              << P[pi] / (param_.Np * mcs) / param_.Delta_p << std::endl;
+      outfile << -i * param_.Delta_p << "\t"
+              << P[mi] / (param_.Np * mcs) / param_.Delta_p << std::endl;
     }
   }
 

@@ -49,8 +49,8 @@ int main(int argc, char const *argv[]) {
   omp_set_num_threads(num_of_threads);
   // std::cout << num_of_threads << std::endl;
 
-  PIMCClass p1(params);
-  PIMCClass p2(params);
+  //  PIMCClass p1(params);
+  //PIMCClass p2(params);
   std::vector<PIMCClass *> pimc;
 
   for (int i = 0; i < params.N; i++) {

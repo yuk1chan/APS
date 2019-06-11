@@ -7,7 +7,7 @@
 #include <cmath>
 #include <random>
 
-#define P_SIZE 1000
+#define P_SIZE 10000
 
 class PIMCClass {
 
